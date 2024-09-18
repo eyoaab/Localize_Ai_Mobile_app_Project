@@ -11,61 +11,39 @@ import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_state.
 
  
 
-class SignupPage extends StatefulWidget {
+class SignInPage extends StatefulWidget {
   @override
-  _SignupPageState createState() => _SignupPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
-  final _nameController = TextEditingController();
-
+class _SignInPageState extends State<SignInPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
-  void clearFields(){
-    _usernameController.clear();
-    _confirmPasswordController.clear();
-    _passwordController.clear();
-    _nameController.clear();
-  }
-
-  void SignUpUser() async {
-    final name = _nameController.text;
+  void SignInUser() async {
     final username = _usernameController.text;
     final password = _passwordController.text;
-    final confirmPassword = _confirmPasswordController.text;
 
-    if (username.isEmpty || password.isEmpty || confirmPassword.isEmpty || password.isEmpty)  {
+    if (username.isEmpty || password.isEmpty) {
       showMessage(
         context,
         const Icon(Icons.info, size: 50, color: Colors.red),
         'Please enter all fields',
       );
       return;
-    }
-    else if(password != confirmPassword){
-      showMessage(
-        context,
-        const Icon(Icons.info, size: 50, color: Colors.red),
-        'Passwords do not match',
-      );
-      return;
-
-
     } else {
       UserEntity user = UserEntity(
-        name: name,
+        name: '',
         username: username,
         password: password,
       );
-      context.read<UserBloc>().add(SignUpEvent(user: user));
-      log('SignUpUser request sent from the page');
+      context.read<UserBloc>().add(SignInEvent(user: user));
+      log('SignInUser request sent from the page');
     }
   }
 
-  void goToSignInPage() {
-    Navigator.pushNamed(context, '/signIn');
+  void goToSignUpPage() {
+    Navigator.pushNamed(context, '/signUp');
   }
 
   @override
@@ -79,25 +57,12 @@ class _SignupPageState extends State<SignupPage> {
               const Icon(Icons.error, size: 50, color: Colors.red),
               state.errorMessage,
             );
-            clearFields();
-          } else if (state is UserSignUpState) {
-            final bool isSuccess = state.successful;
-            if (isSuccess) {
-              showMessage(
-                context,
-                const Icon(Icons.check, size: 50, color: Colors.green),
-                'User signed up successfully',
-              );
-              clearFields();
-              goToSignInPage();
-            }
-            else{
-              showMessage(
-                context,
-                const Icon(Icons.error, size: 50, color: Colors.red),
-                'Failed to sign up please try again',
-              );
-            }
+            _usernameController.clear();
+            _passwordController.clear();
+          } else if (state is UserLoggedInState) {
+            final UserEntity userEntity = state.userData;  
+            log(userEntity.username);
+            log(userEntity.password);
 
 
             
@@ -124,16 +89,21 @@ class _SignupPageState extends State<SignupPage> {
                             ),],
                           border: Border.all(
                           color: const Color.fromARGB(255, 0, 0, 0),
-                          width: 1.0,     
+                          width: 1.0,
+                          
                         ),
                     color: Colors.white, 
                     borderRadius: const  BorderRadius.all(Radius.circular(10),),
+                    
+
                       ),
+                      
+                   
                   ),
                     const SizedBox(height: 40),
                      Center(
                       child: Text(
-                        'Sign up',
+                        'Sign in to your account',
                         style: GoogleFonts.caveatBrush(
                         fontSize: 30,
                         fontWeight: FontWeight.w500,
@@ -144,12 +114,7 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(height: 30),
                      TextField(
                       controller: _usernameController,
-                      decoration: 
-                      customInputDecoration(labelText: 'Name',prefixIcon:  const Icon(Icons.person,color:Color.fromARGB(255, 63, 81, 243)))
-                    ),
-                    const SizedBox(height: 20),
-                     TextField(
-                      controller: _nameController,
+                      // obscureText: true,
                       decoration: 
                       customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.person,color:Color.fromARGB(255, 63, 81, 243)))
                     ),
@@ -162,34 +127,25 @@ class _SignupPageState extends State<SignupPage> {
 
                       customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Color.fromARGB(255, 63, 81, 243)))
                     ),
-                    const SizedBox(height: 20),
-
-                    TextField(
-                      controller: _confirmPasswordController,
-                      obscureText: true,
-                      decoration: 
-
-                      customInputDecoration(labelText: 'Confirm Password',prefixIcon:  const Icon(Icons.lock,color:Color.fromARGB(255, 63, 81, 243)))
-                    ),
-                  const SizedBox(height: 40),
-                  SizedBox(
+                    const SizedBox(height: 40),
+                   SizedBox(
                   width: double.infinity, 
                   child: ElevatedButton(    
-                  onPressed: SignUpUser,
+                  onPressed: SignInUser,
                   style: ElevatedButton.styleFrom(       
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                   ),
                   backgroundColor: const  Color.fromRGBO(63, 81, 243, 1),
-                    ),
+                ),
                 child: state is UserLoadingState
         ? const CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           )
         :
                  const Text(
-                  'Sign Up',
+                  'SignInUser',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -201,10 +157,10 @@ class _SignupPageState extends State<SignupPage> {
             ,
             const SizedBox(height: 40,),
                     TextButton(
-                onPressed: goToSignInPage,
+                onPressed: goToSignUpPage,
                 child: RichText(
                   text:const  TextSpan(
-                    text: "If already  have an account? ",
+                    text: "Don't have an account? ",
                     style:  TextStyle(
                       color: Colors.black, 
                       fontSize: 16,
@@ -213,7 +169,7 @@ class _SignupPageState extends State<SignupPage> {
                       
                       TextSpan(
                         
-                        text: 'Sign in',
+                        text: 'Sign up',
                         style:  TextStyle(
                           color:  Color.fromRGBO(63, 81, 243, 1), 
                           fontWeight: FontWeight.bold,

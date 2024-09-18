@@ -18,7 +18,7 @@ final locator = GetIt.instance;
 
 Future<void> setUp() async {
   locator.registerLazySingleton(() => http.Client());
-  locator.registerLazySingleton(() => Connectivity());
+locator.registerLazySingleton(() => Connectivity());
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
 
   //! Data Sources

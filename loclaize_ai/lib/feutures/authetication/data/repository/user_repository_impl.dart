@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:loclaize_ai/core/error/exception.dart';
 import 'package:loclaize_ai/core/error/faliure.dart';
@@ -18,6 +20,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<Failure, UserEntity>> signIn(UserEntity user) async {
     if (await networkInfo.isConnected) {
+      
       try {
         final result = await remoteDatasource.signInUser(user);
         return Right(result.toEntity()); 
@@ -27,6 +30,8 @@ class UserRepositoryImpl implements UserRepository {
         return Left(UnknownFailure(e.toString())); 
       }
     } else {
+      log('it is not conner to sign in');
+
       return const Left(ConnectionFailure('No internet Connection.')); 
     }
   }
