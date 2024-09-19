@@ -32,6 +32,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _sendMessage() {
+    if (_isLoading) return;
     if (_messageController.text.isNotEmpty) {
       final userMessage = _messageController.text;
 
@@ -57,10 +58,11 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chat Page"),
+        backgroundColor: Colors.white,
+        title: const Text("Chat Page"),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: _handleLogout,
           ),
         ],
@@ -114,7 +116,7 @@ class _ChatPageState extends State<ChatPage> {
                                 SizedBox(width: 10),
                                 Text(
                                   "Assistant is typing...",
-                                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16),
                                 ),
                               ],
                             ),
