@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      home: ChatPage()
+      home: SignInPage()
        
       ),
     );

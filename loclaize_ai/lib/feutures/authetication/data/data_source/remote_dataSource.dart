@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:loclaize_ai/core/error/exception.dart';
 import 'package:loclaize_ai/feutures/authetication/data/model/userModel.dart';

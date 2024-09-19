@@ -70,7 +70,6 @@ class _SignupPageState extends State<SignupPage> {
               context,
               MaterialPageRoute(builder: (context) => SignInPage()),
             );
-
   }
 
   @override
@@ -102,51 +101,30 @@ class _SignupPageState extends State<SignupPage> {
                 const Icon(Icons.error, size: 50, color: Colors.red),
                 'Failed to sign up please try again',
               );
-            }
-
-
-            
+            }      
           }
         },
         builder: (context, state) {
-         
 
-          return SingleChildScrollView(
+        return SingleChildScrollView(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 80.0),
+                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 0.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      width: 130,
-                      decoration:  BoxDecoration(
-                        boxShadow:  [ BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2.0,
-                              blurRadius: 5.0,
-                              offset: const Offset(0.0, 4.0),
-                            ),],
-                          border: Border.all(
-                          color: const Color.fromARGB(255, 0, 0, 0),
-                          width: 1.0,     
-                        ),
-                    color: Colors.white, 
-                    borderRadius: const  BorderRadius.all(Radius.circular(10),),
-                      ),
-                  ),
-                    const SizedBox(height: 40),
+                    Image.asset('logo.png'),
                      Center(
                       child: Text(
                         'Sign up',
-                        style: GoogleFonts.caveatBrush(
+                        style: GoogleFonts.balthazar(
                         fontSize: 30,
                         fontWeight: FontWeight.w500,
                         color:const  Color.fromARGB(255, 0, 0, 0),
                       ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 10),
                      TextField(
                       controller: _usernameController,
                       decoration: 
@@ -156,7 +134,7 @@ class _SignupPageState extends State<SignupPage> {
                      TextField(
                       controller: _nameController,
                       decoration: 
-                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.person,color:Color.fromARGB(255, 63, 81, 243)))
+                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Color.fromARGB(255, 63, 81, 243)))
                     ),
                     const SizedBox(height: 20),
 
@@ -197,14 +175,13 @@ class _SignupPageState extends State<SignupPage> {
                   'Sign Up',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                     fontSize: 21,
                   ),
                 ),
               ),
             )
             ,
-            const SizedBox(height: 40,),
+            const SizedBox(height: 20,),
                     TextButton(
                 onPressed: goToSignInPage,
                 child: RichText(

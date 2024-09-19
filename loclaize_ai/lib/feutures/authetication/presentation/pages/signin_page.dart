@@ -69,51 +69,24 @@ class _SignInPageState extends State<SignInPage> {
             _usernameController.clear();
             _passwordController.clear();
           } else if (state is UserLoggedInState) {
-            final UserEntity userEntity = state.userData;  
-            goToChatPage();
-
-
-            
+            // final UserEntity userEntity = state.userData;  
+            goToChatPage();  
           }
           
         },
         builder: (context, state) {
-         
-
           return SingleChildScrollView(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 80.0),
+                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      width: 130,
-                      decoration:  BoxDecoration(
-                        boxShadow:  [ BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2.0,
-                              blurRadius: 5.0,
-                              offset: const Offset(0.0, 4.0),
-                            ),],
-                          border: Border.all(
-                          color: Color.fromARGB(255, 196, 19, 19),
-                          width: 1.0,
-                          
-                        ),
-                    color: Colors.white, 
-                    borderRadius: const  BorderRadius.all(Radius.circular(10),),
-                    
-
-                      ),
-                      
-                   
-                  ),
-                    const SizedBox(height: 40),
+                    Image.asset('logo.png'),
                      Center(
                       child: Text(
                         'Sign in to your account',
-                        style: GoogleFonts.caveatBrush(
+                        style: GoogleFonts.balthazar(
                         fontSize: 30,
                         fontWeight: FontWeight.w500,
                         color:const  Color.fromARGB(255, 0, 0, 0),
@@ -123,9 +96,8 @@ class _SignInPageState extends State<SignInPage> {
                     const SizedBox(height: 30),
                      TextField(
                       controller: _usernameController,
-                      // obscureText: true,
                       decoration: 
-                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.person,color:Color.fromARGB(255, 63, 81, 243)))
+                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Color.fromARGB(255, 63, 81, 243)))
                     ),
                     const SizedBox(height: 20),
 
@@ -154,11 +126,11 @@ class _SignInPageState extends State<SignInPage> {
           )
         :
                  const Text(
-                  'SignInUser',
+                  'Sign In',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 21,
+                    // fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
