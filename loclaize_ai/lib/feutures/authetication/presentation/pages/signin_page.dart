@@ -40,19 +40,22 @@ class _SignInPageState extends State<SignInPage> {
         password: password,
       );
       context.read<UserBloc>().add(SignInEvent(user: user));
-      log('SignInUser request sent from the page');
+      FocusScope.of(context).unfocus();
+
     }
   }
 
   void goToSignUpPage() {
-      Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SignupPage()),);
+       Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(builder: (context) => SignupPage()),
+);
   }
    void goToChatPage() {
-      Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ChatPage()),);
+     Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(builder: (context) => ChatPage()),
+);
   }
 
   @override
@@ -82,7 +85,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset('logo.png'),
+                    Image.asset('assets/logo.png'),
                      Center(
                       child: Text(
                         'Sign in to your account',
@@ -97,7 +100,7 @@ class _SignInPageState extends State<SignInPage> {
                      TextField(
                       controller: _usernameController,
                       decoration: 
-                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Color.fromARGB(255, 63, 81, 243)))
+                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Colors.blueAccent))
                     ),
                     const SizedBox(height: 20),
 
@@ -106,7 +109,7 @@ class _SignInPageState extends State<SignInPage> {
                       obscureText: true,
                       decoration: 
 
-                      customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Color.fromARGB(255, 63, 81, 243)))
+                      customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
                     ),
                     const SizedBox(height: 40),
                    SizedBox(
@@ -118,7 +121,7 @@ class _SignInPageState extends State<SignInPage> {
                   shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                   ),
-                  backgroundColor: const  Color.fromRGBO(63, 81, 243, 1),
+                  backgroundColor: Colors.blueAccent,
                 ),
                 child: state is UserLoadingState
         ? const CircularProgressIndicator(
@@ -152,7 +155,7 @@ class _SignInPageState extends State<SignInPage> {
                         
                         text: 'Sign up',
                         style:  TextStyle(
-                          color:  Color.fromRGBO(63, 81, 243, 1), 
+                          color: Colors.blueAccent, 
                           fontWeight: FontWeight.bold,
                         ),
                       ),

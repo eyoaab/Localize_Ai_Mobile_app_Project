@@ -17,7 +17,7 @@ class _ChatPageState extends State<ChatPage> {
   final List<Message> _messages = [
     Message(text: 'Ask anything you want, I am here to help you', isUser: false),
   ];
-  
+
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
 
@@ -38,10 +38,12 @@ class _ChatPageState extends State<ChatPage> {
 
       setState(() {
         _messages.add(Message(text: userMessage, isUser: true));
-        _isLoading = true; 
+        _isLoading = true;
         _messageController.clear();
       });
       _scrollToBottom();
+
+      FocusScope.of(context).unfocus();
 
       BlocProvider.of<ChatBloc>(context).add(GetChatEvent(message: userMessage));
     }
@@ -72,7 +74,7 @@ class _ChatPageState extends State<ChatPage> {
           Opacity(
             opacity: 0.3,
             child: Image.asset(
-              'logo.png', 
+              'assets/logo.png',
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
@@ -94,13 +96,13 @@ class _ChatPageState extends State<ChatPage> {
                         SnackBar(content: Text(state.errorMessage)),
                       );
                       setState(() {
-                        _isLoading = false; 
+                        _isLoading = false;
                       });
                     }
                   },
                   child: ListView.builder(
                     controller: _scrollController,
-                    itemCount: _messages.length + (_isLoading ? 1 : 0), 
+                    itemCount: _messages.length + (_isLoading ? 1 : 0),
                     itemBuilder: (context, index) {
                       if (_isLoading && index == _messages.length) {
                         return const Align(
@@ -162,8 +164,21 @@ class _ChatPageState extends State<ChatPage> {
                         controller: _messageController,
                         decoration: InputDecoration(
                           hintText: "Type a message",
+                          hintStyle: const TextStyle(color: Colors.grey), 
+                          filled: true,
+                          fillColor: Colors.white, 
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide.none, 
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0), // Padding inside the TextField
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.5), width: 1.0), // Light border
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Colors.blueAccent, width: 2.0), // Highlighted border when focused
                           ),
                         ),
                       ),

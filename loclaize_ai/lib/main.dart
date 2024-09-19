@@ -15,10 +15,12 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await setUp(); 
 
-  runApp(
-    DevicePreview(
-    builder: (context) => MyApp(),
-  ),);
+  // runApp(
+  //   DevicePreview(
+  //   builder: (context) => MyApp(),
+  // ),);
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -34,10 +36,10 @@ class MyApp extends StatelessWidget {
         ),
       ],  
       child: MaterialApp(
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
+      // locale: DevicePreview.locale(context),
+      // builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      home: ChatPage()
+      home: SplashScreen()
        
       ),
     );

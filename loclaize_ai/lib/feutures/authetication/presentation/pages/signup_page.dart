@@ -61,15 +61,16 @@ class _SignupPageState extends State<SignupPage> {
         password: password,
       );
       context.read<UserBloc>().add(SignUpEvent(user: user));
-      log('SignUpUser request sent from the page');
+      FocusScope.of(context).unfocus();
+
     }
   }
 
   void goToSignInPage() {
-        Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SignInPage()),
-            );
+        Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => SignInPage()),
+);
   }
 
   @override
@@ -113,7 +114,7 @@ class _SignupPageState extends State<SignupPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset('logo.png'),
+                    Image.asset('assets/logo.png'),
                      Center(
                       child: Text(
                         'Sign up',
@@ -128,13 +129,13 @@ class _SignupPageState extends State<SignupPage> {
                      TextField(
                       controller: _usernameController,
                       decoration: 
-                      customInputDecoration(labelText: 'Name',prefixIcon:  const Icon(Icons.person,color:Color.fromARGB(255, 63, 81, 243)))
+                      customInputDecoration(labelText: 'Name',prefixIcon:  const Icon(Icons.person,color:Colors.blueAccent))
                     ),
                     const SizedBox(height: 20),
                      TextField(
                       controller: _nameController,
                       decoration: 
-                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Color.fromARGB(255, 63, 81, 243)))
+                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Colors.blueAccent))
                     ),
                     const SizedBox(height: 20),
 
@@ -143,7 +144,7 @@ class _SignupPageState extends State<SignupPage> {
                       obscureText: true,
                       decoration: 
 
-                      customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Color.fromARGB(255, 63, 81, 243)))
+                      customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
                     ),
                     const SizedBox(height: 20),
 
@@ -152,7 +153,7 @@ class _SignupPageState extends State<SignupPage> {
                       obscureText: true,
                       decoration: 
 
-                      customInputDecoration(labelText: 'Confirm Password',prefixIcon:  const Icon(Icons.lock,color:Color.fromARGB(255, 63, 81, 243)))
+                      customInputDecoration(labelText: 'Confirm Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
                     ),
                   const SizedBox(height: 40),
                   SizedBox(
@@ -164,7 +165,7 @@ class _SignupPageState extends State<SignupPage> {
                   shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                   ),
-                  backgroundColor: const  Color.fromRGBO(63, 81, 243, 1),
+                  backgroundColor:  Colors.blueAccent,
                     ),
                 child: state is UserLoadingState
         ? const CircularProgressIndicator(
@@ -197,7 +198,7 @@ class _SignupPageState extends State<SignupPage> {
                         
                         text: 'Sign in',
                         style:  TextStyle(
-                          color:  Color.fromRGBO(63, 81, 243, 1), 
+                          color:  Colors.blueAccent, 
                           fontWeight: FontWeight.bold,
                         ),
                       ),

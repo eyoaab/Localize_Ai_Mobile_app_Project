@@ -14,10 +14,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-       Navigator.push(
+        Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => SignInPage()),
-            );
+      );
     });
   }
 
@@ -25,7 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: Colors.white, 
-      body: Center(
+      body: 
+      Center(
         child: SpinKitWave(
           color: Colors.blue,  
           size: 80.0,  
