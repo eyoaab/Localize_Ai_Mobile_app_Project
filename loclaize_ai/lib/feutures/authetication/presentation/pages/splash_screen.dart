@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loclaize_ai/feutures/authetication/presentation/pages/signin_page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,23 +11,24 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  // void initState() {
-  //   super.initState();
-  //   // Simulate some loading process (e.g., fetching data)
-  //   Future.delayed(Duration(seconds: 3), () {
-  //     // After 3 seconds, navigate to the next screen (e.g., HomeScreen)
-  //     Navigator.pushReplacementNamed(context, '/home');
-  //   });
-  // }
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), () {
+       Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SignInPage()),
+            );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.white,  // Optional: Set a background color
+      backgroundColor: Colors.white, 
       body: Center(
         child: SpinKitWave(
-          color: Colors.blue,  // Customize the color of the loading indicator
-          size: 80.0,  // Customize the size of the loading indicator
+          color: Colors.blue,  
+          size: 80.0,  
         ),
       ),
     );

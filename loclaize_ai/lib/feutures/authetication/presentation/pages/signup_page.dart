@@ -8,6 +8,7 @@ import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dar
 import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_bloc.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_event.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_state.dart';
+import 'package:loclaize_ai/feutures/authetication/presentation/pages/signin_page.dart';
 
  
 
@@ -65,7 +66,11 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   void goToSignInPage() {
-    Navigator.pushNamed(context, '/signIn');
+        Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SignInPage()),
+            );
+
   }
 
   @override

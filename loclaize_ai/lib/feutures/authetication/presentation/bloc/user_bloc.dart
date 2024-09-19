@@ -1,6 +1,8 @@
 
 
 
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loclaize_ai/core/error/faliure.dart';
@@ -42,7 +44,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final Either<Failure, UserEntity> result = await signInUsecase.excute(event.user);
       result.fold(
         (failure) => emit(UserErrorState(errorMessage: failure.message)),
-        (check) => emit(UserLoggedInState(userData: check)),
+        (check) { 
+          log(check.name);
+          log(check.username);
+          log(check.password);
+
+          emit(UserLoggedInState(userData: check));},
+
+        // (check) => emit(UserLoggedInState(userData: check)),
       );
       });
   }

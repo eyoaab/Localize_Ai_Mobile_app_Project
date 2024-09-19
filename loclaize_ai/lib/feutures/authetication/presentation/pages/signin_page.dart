@@ -8,6 +8,8 @@ import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dar
 import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_bloc.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_event.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_state.dart';
+import 'package:loclaize_ai/feutures/authetication/presentation/pages/signup_page.dart';
+import 'package:loclaize_ai/feutures/chat/presentation/pages/chat_page.dart';
 
  
 
@@ -43,7 +45,14 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void goToSignUpPage() {
-    Navigator.pushNamed(context, '/signUp');
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignupPage()),);
+  }
+   void goToChatPage() {
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ChatPage()),);
   }
 
   @override
@@ -61,12 +70,12 @@ class _SignInPageState extends State<SignInPage> {
             _passwordController.clear();
           } else if (state is UserLoggedInState) {
             final UserEntity userEntity = state.userData;  
-            log(userEntity.username);
-            log(userEntity.password);
+            goToChatPage();
 
 
             
           }
+          
         },
         builder: (context, state) {
          
@@ -88,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
                               offset: const Offset(0.0, 4.0),
                             ),],
                           border: Border.all(
-                          color: const Color.fromARGB(255, 0, 0, 0),
+                          color: Color.fromARGB(255, 196, 19, 19),
                           width: 1.0,
                           
                         ),

@@ -24,7 +24,7 @@ locator.registerLazySingleton(() => Connectivity());
   //! Data Sources
   locator.registerLazySingleton<RemoteDatasource>(
       () => RemoteDatasourceImpl(client:locator()));
-  locator.registerLazySingleton<ChatRemoteDatasourceImpl>(
+  locator.registerLazySingleton<ChatRemoteDatasource>(
       () => ChatRemoteDatasourceImpl(client: locator()));
       
   
