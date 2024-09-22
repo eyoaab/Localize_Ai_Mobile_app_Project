@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loclaize_ai/core/commonFunctions/commonFunction.dart';
 import 'package:loclaize_ai/core/commonWidgets/password_text_field.dart';
 import 'package:loclaize_ai/core/commonWidgets/store.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
@@ -20,8 +21,15 @@ class _SignupPageState extends State<SignupPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-   bool _isPasswordVisible = false;
+  bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+
+  String? _emailError;
+  Color _borderColorForEmail = Colors.grey;
+
+  String? PasswordError;
+  Color _borderColorForPassword = Colors.grey;
+
   
 
   void clearFields() {
@@ -32,6 +40,7 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   void signUpUser() async {
+    if(_emailError != null){return;}
     final name = _nameController.text;
     final username = _usernameController.text;
     final password = _passwordController.text;
@@ -152,11 +161,50 @@ class _SignupPageState extends State<SignupPage> {
 
                     TextField(
                       controller: _usernameController,
-                      decoration: customInputDecoration(
-                        labelText: 'Username',
-                        prefixIcon: const Icon(Icons.email, color: Colors.blueAccent),
+                      decoration: InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: const Icon(Icons.email, color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: _borderColorForEmail),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: _borderColorForEmail), 
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      
                     ),
+                     keyboardType: TextInputType.emailAddress,
+                      onChanged: (value) {
+                      if (value.isEmpty) {
+                        setState(() {
+                          _emailError = 'Please enter your email';
+                          _borderColorForEmail  = Colors.red; 
+                        });
+                      } else if (!isValidEmail(value)) {
+                        setState(() {
+                          _emailError = 'Please enter a valid email address';
+                         _borderColorForEmail  = Colors.red; 
+                        });
+                      } else {
+                        setState(() {
+                          _emailError = null;
+                          _borderColorForEmail  = Colors.green; 
+                        });
+                      }
+                    },
+
+                    ),
+                    const SizedBox(height: 10),
+                      if (_emailError != null)
+                        Text(
+                        _emailError!,
+                        style: const TextStyle(color: Colors.red),
+                        ),
                     const SizedBox(height: 20),
 
                     TextField(
