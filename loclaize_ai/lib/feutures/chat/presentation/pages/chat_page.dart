@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loclaize_ai/core/commonWidgets/store.dart';
-import 'package:loclaize_ai/feutures/authetication/presentation/pages/signin_page.dart';
 import 'package:loclaize_ai/feutures/chat/domain/entity/message_entity.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/bloc/chat_bloc.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/bloc/chat_event.dart';
@@ -57,10 +56,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _handleLogout() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => SignInPage()),
-    );
+        messageForLogOut(context, const Icon(Icons.question_mark_outlined, color: Colors.red,size:40), widget.name);
   }
 
   @override
@@ -203,7 +199,7 @@ class _ChatPageState extends State<ChatPage> {
                         child: TextField(
                           controller: _messageController,
                           decoration: createMessageInputDecoration(),
-                          onSubmitted: (_) => _sendMessage(), // Send on enter
+                          onSubmitted: (_) => _sendMessage(),
                         ),
                       ),
                       IconButton(
