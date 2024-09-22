@@ -75,151 +75,153 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<UserBloc, UserState>(
-        listener: (context, state) {
-          if (state is UserErrorState) {
-            log('error in eroor state');
-            showMessage(
-              context,
-              const Icon(Icons.error, size: 50, color: Colors.red),
-              state.errorMessage,
-            );
-            clearFields();
-          } else if (state is UserSignUpState) {
-            String message = state.message;
-            final bool isSuccess = message == "User registered successfully" ;
-            if (isSuccess) {
-           
-              clearFields();
-              goToSignInPage();
-                 showMessage(
+    return SafeArea(
+      child: Scaffold(
+        body: BlocConsumer<UserBloc, UserState>(
+          listener: (context, state) {
+            if (state is UserErrorState) {
+              // log('error in eroor state');
+              showMessage(
+                context,
+                const Icon(Icons.error, size: 50, color: Colors.red),
+                state.errorMessage,
+              );
+            } else if (state is UserSignUpState) {
+              String message = state.message;
+              final bool isSuccess = message == "User registered successfully" ;
+              if (isSuccess) {
+             
+                clearFields();
+                goToSignInPage();
+                showMessage(
                 context,
                 const Icon(Icons.check, size: 50, color: Colors.green),
                 message,
               );
+              }
+              else{
+                showMessage(
+                  context,
+                  const Icon(Icons.error, size: 50, color: Colors.red),
+                  message,
+                );
+              }      
             }
-            else{
-              showMessage(
-                context,
-                const Icon(Icons.error, size: 50, color: Colors.red),
-                message,
-              );
-            }      
-          }
-        },
-        builder: (context, state) {
-
-        return SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 0.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset('assets/logo.png'),
-                    // Image.asset('logo.png'),
-
-                     Center(
-                      child: Text(
-                        'Sign up',
-                        style: GoogleFonts.balthazar(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                        color:const  Color.fromARGB(255, 0, 0, 0),
-                      ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                     TextField(
-                      controller: _nameController,
-                      decoration: 
-                      customInputDecoration(labelText: 'Name',prefixIcon:  const Icon(Icons.person,color:Colors.blueAccent))
-                    ),
-                    const SizedBox(height: 20),
-                     TextField(
-                      controller: _usernameController,
-                      decoration: 
-                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Colors.blueAccent))
-                    ),
-                    const SizedBox(height: 20),
-
-                    TextField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: 
-
-                      customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
-                    ),
-                    const SizedBox(height: 20),
-
-                    TextField(
-                      controller: _confirmPasswordController,
-                      obscureText: true,
-                      decoration: 
-
-                      customInputDecoration(labelText: 'Confirm Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
-                    ),
-                  const SizedBox(height: 40),
-                  SizedBox(
-                  width: double.infinity, 
-                  child: ElevatedButton(    
-                  onPressed: SignUpUser,
-                  style: ElevatedButton.styleFrom(       
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  backgroundColor:  Colors.blueAccent,
-                    ),
-                child: state is UserLoadingState
-        ? const CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          )
-        :
-                 const Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    color: Colors.white,
-                     fontSize: 21,
-                  ),
-                ),
-              ),
-            )
-            ,
-            const SizedBox(height: 20,),
-                    TextButton(
-                onPressed: goToSignInPage,
-                child: RichText(
-                  text:const  TextSpan(
-                    text: "If already  have an account? ",
-                    style:  TextStyle(
-                      color: Colors.black, 
-                      fontSize: 16,
-                    ),
-                    children: [
-                      
-                      TextSpan(
-                        
-                        text: 'Sign in',
-                        style:  TextStyle(
-                          color:  Colors.blueAccent, 
-                          fontWeight: FontWeight.bold,
+          },
+          builder: (context, state) {
+      
+          return SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 0.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset('assets/logo.png'),
+                      // Image.asset('logo.png'),
+      
+                       Center(
+                        child: Text(
+                          'Sign up',
+                          style: GoogleFonts.balthazar(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          color:const  Color.fromARGB(255, 0, 0, 0),
+                        ),
                         ),
                       ),
+                      const SizedBox(height: 10),
+                       TextField(
+                        controller: _nameController,
+                        decoration: 
+                        customInputDecoration(labelText: 'Name',prefixIcon:  const Icon(Icons.person,color:Colors.blueAccent))
+                      ),
+                      const SizedBox(height: 20),
+                       TextField(
+                        controller: _usernameController,
+                        decoration: 
+                        customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Colors.blueAccent))
+                      ),
+                      const SizedBox(height: 20),
+      
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: 
+      
+                        customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
+                      ),
+                      const SizedBox(height: 20),
+      
+                      TextField(
+                        controller: _confirmPasswordController,
+                        obscureText: true,
+                        decoration: 
+      
+                        customInputDecoration(labelText: 'Confirm Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
+                      ),
+                    const SizedBox(height: 40),
+                    SizedBox(
+                    width: double.infinity, 
+                    child: ElevatedButton(    
+                    onPressed: SignUpUser,
+                    style: ElevatedButton.styleFrom(       
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    backgroundColor:  Colors.blueAccent,
+                      ),
+                  child: state is UserLoadingState
+          ? const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            
+            )
+          :
+                   const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: Colors.white,
+                       fontSize: 21,
+                    ),
+                  ),
+                ),
+              )
+              ,
+              const SizedBox(height: 20,),
+                      TextButton(
+                  onPressed: goToSignInPage,
+                  child: RichText(
+                    text:const  TextSpan(
+                      text: "If already  have an account? ",
+                      style:  TextStyle(
+                        color: Colors.black, 
+                        fontSize: 16,
+                      ),
+                      children: [
+                        
+                        TextSpan(
+                          
+                          text: 'Sign in',
+                          style:  TextStyle(
+                            color:  Colors.blueAccent, 
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+      
+      
+                      
                     ],
                   ),
                 ),
               ),
-
-
-                    
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

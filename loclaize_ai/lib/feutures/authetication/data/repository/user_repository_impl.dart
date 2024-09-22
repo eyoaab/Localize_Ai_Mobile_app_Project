@@ -32,7 +32,8 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<Failure, Model>> signIn(UserEntity user,)async {
-    if (await networkInfo.isConnected) {
+       final isConnected = await networkInfo.isConnected;
+    if (isConnected) {
       
       try {
         final result = await remoteDatasource.signInUser(user);
@@ -45,9 +46,9 @@ class UserRepositoryImpl implements UserRepository {
         return Left(UnknownFailure(e.toString())); 
       }
     } else {
-      log('it is not conner to sign in');
 
-      return const Left(ConnectionFailure('No internet Connection.')); 
+    return const Left(ConnectionFailure('Please check your internet connection and try again')); 
+
     }
   }
 
@@ -63,7 +64,8 @@ class UserRepositoryImpl implements UserRepository {
         return Left(UnknownFailure(e.toString())); 
       }
     } else {
-      return const Left(ConnectionFailure('No internet Connection. '));
+      return const Left(ConnectionFailure('Please check your internet connection and try again')); 
+
     }
   }
 }

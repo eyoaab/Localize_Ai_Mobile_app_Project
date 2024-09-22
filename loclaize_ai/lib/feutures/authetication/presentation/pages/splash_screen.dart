@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/pages/signin_page.dart';
 
@@ -23,13 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.white, 
-      body: 
-      Center(
-        child: SpinKitWave(
-          color: Colors.blue,  
-          size: 80.0,  
+    return const SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white, 
+        body: 
+        Center(
+          child: SpinKitWave(
+            color: Colors.blue,  
+            size: 80.0,  
+          ),
         ),
       ),
     );

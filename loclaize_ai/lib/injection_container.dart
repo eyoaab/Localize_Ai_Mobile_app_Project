@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:loclaize_ai/core/network/network_info.dart';
 import 'package:loclaize_ai/feutures/authetication/data/data_source/remote_dataSource.dart';
 import 'package:loclaize_ai/feutures/authetication/data/repository/user_repository_impl.dart';
@@ -20,13 +21,15 @@ final locator = GetIt.instance;
 Future<void> setUp() async {
   final prefs = await SharedPreferences.getInstance();
   locator.registerSingleton<SharedPreferences>(prefs);
+  locator.registerLazySingleton<NetworkInfo>(
+    () => NetworkInfoImpl(connectionChecker: locator()),
+  );
   
   // Register the Shar
 
   /****** */
   locator.registerLazySingleton(() => http.Client());
-locator.registerLazySingleton(() => Connectivity());
-  locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
+ locator.registerLazySingleton(() => InternetConnectionChecker());
 
   //! Data Sources
   locator.registerLazySingleton<RemoteDatasource>(

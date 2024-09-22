@@ -26,7 +26,9 @@ Future<String?> gettoken(String key) async {
 
     @override
   Future<Either<Failure,ChatEntity>> getMessage(String message)async{
-   if (await networkInfo.isConnected) {
+       final isConnected = await networkInfo.isConnected;
+
+   if (isConnected) {
       try {
         String? token = await gettoken('token');
         if (token == null) {
@@ -35,12 +37,12 @@ Future<String?> gettoken(String key) async {
         final result = await chatRemoteDatasource.getMessage(message, token);
         return Right(result.toEntity()); 
       } on ServerException {
-        return const Left(ServerFailure('failed to get the response'));
+        return const Left(ServerFailure('failed to get the response p;ease try again'));
       } catch (e) {
         return Left(UnknownFailure(e.toString())); 
       }
     } else {
-      return const Left(ConnectionFailure('connection lost')); 
+      return const Left(ConnectionFailure('Please check your internet connection and try again')); 
     }
 
   }

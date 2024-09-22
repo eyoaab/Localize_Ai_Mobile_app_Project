@@ -60,132 +60,133 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<UserBloc, UserState>(
-        listener: (context, state) {
-          if (state is UserErrorState) {
-            showMessage(
-              context,
-              const Icon(Icons.error, size: 50, color: Colors.red),
-              state.errorMessage,
-            );
-            _usernameController.clear();
-            _passwordController.clear();
-          } else if (state is UserLoggedInState) {
-            final userData = state.userData;
-            if (userData.isError){
+    return SafeArea(
+      child: Scaffold(
+        body: BlocConsumer<UserBloc, UserState>(
+          listener: (context, state) {
+            if (state is UserErrorState) {
               showMessage(
-              context,
-              const Icon(Icons.error, size: 50, color: Colors.red),
-              userData.message,
-            );
-
-
-            }else{
-            goToChatPage();  
-
+                context,
+                const Icon(Icons.error, size: 50, color: Colors.red),
+                state.errorMessage,
+              );
+              _usernameController.clear();
+              _passwordController.clear();
+            } else if (state is UserLoggedInState) {
+              final userData = state.userData;
+              if (userData.isError){
+                showMessage(
+                context,
+                const Icon(Icons.error, size: 50, color: Colors.red),
+                userData.message,
+              );
+      
+      
+              }else{
+              goToChatPage();  
+      
+              }
             }
-            // final UserEntity userEntity = state.userData;  
-          }
-          
-        },
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset('assets/logo.png'),
-                    // Image.asset('logo.png'),
-
-                     Center(
-                      child: Text(
-                        'Sign in to your account',
-                        style: GoogleFonts.balthazar(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                        color:const  Color.fromARGB(255, 0, 0, 0),
-                      ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                     TextField(
-                      controller: _usernameController,
-                      decoration: 
-                      customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Colors.blueAccent))
-                    ),
-                    const SizedBox(height: 20),
-
-                    TextField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: 
-
-                      customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
-                    ),
-                    const SizedBox(height: 40),
-                   SizedBox(
-                  width: double.infinity, 
-                  child: ElevatedButton(    
-                  onPressed: SignInUser,
-                  style: ElevatedButton.styleFrom(       
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  backgroundColor: Colors.blueAccent,
-                ),
-                child: state is UserLoadingState
-        ? const CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          )
-        :
-                 const Text(
-                  'Sign In',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 21,
-                    // fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            )
-            ,
-            const SizedBox(height: 40,),
-                    TextButton(
-                onPressed: goToSignUpPage,
-                child: RichText(
-                  text:const  TextSpan(
-                    text: "Don't have an account? ",
-                    style:  TextStyle(
-                      color: Colors.black, 
-                      fontSize: 16,
-                    ),
-                    children: [
-                      
-                      TextSpan(
-                        
-                        text: 'Sign up',
-                        style:  TextStyle(
-                          color: Colors.blueAccent, 
-                          fontWeight: FontWeight.bold,
+            
+          },
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset('assets/logo.png'),
+                      // Image.asset('logo.png'),
+      
+                       Center(
+                        child: Text(
+                          'Sign in to your account',
+                          style: GoogleFonts.balthazar(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          color:const  Color.fromARGB(255, 0, 0, 0),
+                        ),
                         ),
                       ),
+                      const SizedBox(height: 30),
+                       TextField(
+                        controller: _usernameController,
+                        decoration: 
+                        customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Colors.blueAccent))
+                      ),
+                      const SizedBox(height: 20),
+      
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: 
+      
+                        customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
+                      ),
+                      const SizedBox(height: 40),
+                     SizedBox(
+                    width: double.infinity, 
+                    child: ElevatedButton(    
+                    onPressed: SignInUser,
+                    style: ElevatedButton.styleFrom(       
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    backgroundColor: Colors.blueAccent,
+                  ),
+                  child: state is UserLoadingState
+          ? const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            )
+          :
+                   const Text(
+                    'Sign In',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 21,
+                      // fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+              ,
+              const SizedBox(height: 40,),
+                      TextButton(
+                  onPressed: goToSignUpPage,
+                  child: RichText(
+                    text:const  TextSpan(
+                      text: "Don't have an account? ",
+                      style:  TextStyle(
+                        color: Colors.black, 
+                        fontSize: 16,
+                      ),
+                      children: [
+                        
+                        TextSpan(
+                          
+                          text: 'Sign up',
+                          style:  TextStyle(
+                            color: Colors.blueAccent, 
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+      
+      
+                      
                     ],
                   ),
                 ),
               ),
-
-
-                    
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

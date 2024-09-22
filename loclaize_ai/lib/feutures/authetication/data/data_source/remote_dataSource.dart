@@ -75,8 +75,6 @@ class RemoteDatasourceImpl extends RemoteDatasource {
         final responseBody = response.body;
      
         final model = Model.fromJson(json.decode(responseBody));
-        // String token = model.token; 
-
 
         return model;
       } else {

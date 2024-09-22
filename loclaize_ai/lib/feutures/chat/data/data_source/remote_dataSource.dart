@@ -27,17 +27,17 @@ class ChatRemoteDatasourceImpl extends ChatRemoteDatasource {
         }),
       );
 
-      log("Response status: ${response.statusCode}");
-      log("Response body: ${response.body}");
+      // log("Response status: ${response.statusCode}");
+      // log("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
         return ChatModel.fromJson(json.decode(response.body));
       } else {
-        log('Server responded with status: ${response.statusCode}');
+        // log('Server responded with status: ${response.statusCode}');
         throw ServerException();
       }
     } on Exception catch (e) {
-      log(e.toString());
+      // log(e.toString());
       throw ServerException();
     }
   }
