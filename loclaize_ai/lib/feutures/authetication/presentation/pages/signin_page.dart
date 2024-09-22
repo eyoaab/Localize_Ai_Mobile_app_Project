@@ -1,8 +1,8 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loclaize_ai/core/commonWidgets/password_text_field.dart';
 import 'package:loclaize_ai/core/commonWidgets/store.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_bloc.dart';
@@ -21,6 +21,13 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+    bool _isPasswordVisible = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
 
   void SignInUser() async {
     final username = _usernameController.text;
@@ -97,7 +104,15 @@ class _SignInPageState extends State<SignInPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Image.asset('assets/logo.png'),
+                      ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0), 
+                      child: Image.asset(
+                      'assets/logo1.jpg',
+          
+                      fit: BoxFit.cover, 
+                      ),
+                      )
+,
                       // Image.asset('logo.png'),
       
                        Center(
@@ -120,13 +135,15 @@ class _SignInPageState extends State<SignInPage> {
       
                       TextField(
                         controller: _passwordController,
-                        obscureText: true,
-                        decoration: 
-      
-                        customInputDecoration(labelText: 'Password',prefixIcon:  const Icon(Icons.lock,color:Colors.blueAccent))
+                        obscureText: !_isPasswordVisible, 
+                        decoration: passwordInputDecoration(
+                        labelText: 'Password',
+                        isPasswordVisible: _isPasswordVisible,
+                        togglePasswordVisibility: _togglePasswordVisibility,),
                       ),
-                      const SizedBox(height: 40),
-                     SizedBox(
+
+                    const SizedBox(height: 40),
+                    SizedBox(
                     width: double.infinity, 
                     child: ElevatedButton(    
                     onPressed: SignInUser,
@@ -147,7 +164,6 @@ class _SignInPageState extends State<SignInPage> {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 21,
-                      // fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

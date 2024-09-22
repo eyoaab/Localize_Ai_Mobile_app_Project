@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:loclaize_ai/core/error/exception.dart';
@@ -6,7 +5,6 @@ import 'package:loclaize_ai/core/error/faliure.dart';
 import 'package:loclaize_ai/core/network/network_info.dart';
 import 'package:loclaize_ai/feutures/authetication/data/data_source/remote_dataSource.dart';
 import 'package:loclaize_ai/feutures/authetication/data/model/model.dart';
-import 'package:loclaize_ai/feutures/authetication/data/model/userModel.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/repository/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';

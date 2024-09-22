@@ -1,13 +1,11 @@
 
 
 
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loclaize_ai/core/error/faliure.dart';
 import 'package:loclaize_ai/feutures/authetication/data/model/model.dart';
-import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/usecase/signin_usecase.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/usecase/signup_usecase.dart';
 

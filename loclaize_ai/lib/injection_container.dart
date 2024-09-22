@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -19,15 +18,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 final locator = GetIt.instance;
 
 Future<void> setUp() async {
+  // External
   final prefs = await SharedPreferences.getInstance();
   locator.registerSingleton<SharedPreferences>(prefs);
   locator.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(connectionChecker: locator()),
   );
   
-  // Register the Shar
 
-  /****** */
+  /*******/
   locator.registerLazySingleton(() => http.Client());
  locator.registerLazySingleton(() => InternetConnectionChecker());
 

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:loclaize_ai/core/error/exception.dart';
 import 'package:loclaize_ai/feutures/authetication/data/model/model.dart';
-import 'package:loclaize_ai/feutures/authetication/data/model/userModel.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
 
 abstract class RemoteDatasource {

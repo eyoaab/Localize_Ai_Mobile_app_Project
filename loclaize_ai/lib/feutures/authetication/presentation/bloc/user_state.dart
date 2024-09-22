@@ -1,5 +1,4 @@
 import 'package:loclaize_ai/feutures/authetication/data/model/model.dart';
-import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
 
 abstract class UserState {}
 

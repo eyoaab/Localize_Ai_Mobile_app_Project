@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loclaize_ai/core/commonWidgets/store.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/pages/signin_page.dart';
 import 'package:loclaize_ai/feutures/chat/domain/entity/message_entity.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/bloc/chat_bloc.dart';
@@ -74,7 +75,7 @@ class _ChatPageState extends State<ChatPage> {
           Opacity(
             opacity: 0.3,
             child: Image.asset(
-              'assets/logo.png',
+              'assets/logo1.jpg',
               // 'logo.png',
 
               fit: BoxFit.cover,
@@ -94,9 +95,7 @@ class _ChatPageState extends State<ChatPage> {
                       });
                       _scrollToBottom();
                     } else if (state is ChatErrorState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.errorMessage)),
-                      );
+                      showMessage(context, const Icon(Icons.error,color:Colors.red), state.errorMessage);
                       setState(() {
                         _isLoading = false;
                       });
@@ -180,7 +179,7 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.blueAccent, width: 2.0), // Highlighted border when focused
+                            borderSide: const BorderSide(color: Colors.blueAccent, width: 2.0), // Highlighted border when focused
                           ),
                         ),
                       ),
