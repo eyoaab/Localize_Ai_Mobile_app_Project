@@ -32,12 +32,11 @@ class _SignInPageState extends State<SignInPage> {
       _isPasswordVisible = !_isPasswordVisible;
     });
   }
-
   void SignInUser() async {
     final username = _usernameController.text;
     final password = _passwordController.text;
 
-    if(_emailError == null){return;}
+    if(_emailError != null){return;}
     if (username.isEmpty || password.isEmpty) {
       showMessage(
         context,
@@ -56,20 +55,19 @@ class _SignInPageState extends State<SignInPage> {
 
     }
   }
-
   void goToSignUpPage() {
       Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => SignupPage()),
       );
   }
-  void goToChatPage() {
+  void goToChatPage(String name, String email) {
       Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => ChatPage()),
+      MaterialPageRoute(builder: (context) => ChatPage(name: name,email:email,)),
 );
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -93,11 +91,10 @@ class _SignInPageState extends State<SignInPage> {
                 userData.message,
               );      
               }else{
-              goToChatPage();  
+              goToChatPage(userData.name,userData.username);  
       
               }
             }
-            
           },
           builder: (context, state) {
             return SingleChildScrollView(
@@ -222,9 +219,7 @@ class _SignInPageState extends State<SignInPage> {
                         fontSize: 16,
                       ),
                       children: [
-                        
                         TextSpan(
-                          
                           text: 'Sign up',
                           style:  TextStyle(
                             color: Colors.blueAccent, 
@@ -235,9 +230,6 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                 ),
-      
-      
-                      
                     ],
                   ),
                 ),

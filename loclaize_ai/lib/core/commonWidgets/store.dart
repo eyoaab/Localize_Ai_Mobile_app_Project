@@ -82,3 +82,25 @@ InputDecoration customInputDecoration({
     ),
   );
 }
+
+InputDecoration createMessageInputDecoration({String hintText = "Type a message"}) {
+  return InputDecoration(
+    hintText: hintText,
+    hintStyle: const TextStyle(color: Colors.grey),
+    filled: true,
+    fillColor: Colors.grey[200],
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20.0),
+      borderSide: BorderSide.none,
+    ),
+    contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20.0),
+      borderSide: BorderSide(color: Colors.grey.withOpacity(0.5), width: 1.0), 
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20.0),
+      borderSide: const BorderSide(color: Colors.blueAccent, width: 2.0), 
+    ),
+  );
+}

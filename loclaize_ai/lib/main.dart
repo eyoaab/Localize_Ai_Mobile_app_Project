@@ -4,6 +4,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_bloc.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/pages/splash_screen.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/bloc/chat_bloc.dart';
+import 'package:loclaize_ai/feutures/chat/presentation/pages/chat_page.dart';
   
 import 'injection_container.dart';
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      home: SplashScreen()
+      home: ChatPage(name: 'Eyob tariku',email: 'Eyob@gmIL.com',)  
        
       ),
     );

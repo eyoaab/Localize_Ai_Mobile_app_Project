@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:loclaize_ai/core/commonWidgets/store.dart';
 import 'package:loclaize_ai/feutures/authetication/presentation/pages/signin_page.dart';
 import 'package:loclaize_ai/feutures/chat/domain/entity/message_entity.dart';
@@ -9,6 +10,11 @@ import 'package:loclaize_ai/feutures/chat/presentation/bloc/chat_event.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/bloc/chat_state.dart';
 
 class ChatPage extends StatefulWidget {
+  final String name;
+  final String email;
+
+  const ChatPage({Key? key, required this.name, required this.email}) : super(key: key);
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -51,7 +57,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _handleLogout() {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => SignInPage()),
     );
@@ -59,144 +65,162 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text("Chat Page"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _handleLogout,
-          ),
-        ],
-      ),
-      body: Stack(
-        children: [
-          Opacity(
-            opacity: 0.3,
-            child: Image.asset(
-              'assets/logo1.jpg',
-              // 'logo.png',
-
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: const Text("Chat Page", style: TextStyle(color: Colors.black)),
+          actions: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.name,
+                  style: GoogleFonts.balthazar(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  widget.email,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
             ),
-          ),
-          Column(
-            children: [
-              Expanded(
-                child: BlocListener<ChatBloc, ChatState>(
-                  listener: (context, state) {
-                    if (state is ChatLoadedState) {
-                      setState(() {
-                        _messages.add(Message(text: state.chatData.message, isUser: false));
-                        _isLoading = false;
-                      });
-                      _scrollToBottom();
-                    } else if (state is ChatErrorState) {
-                      showMessage(context, const Icon(Icons.error,color:Colors.red), state.errorMessage);
-                      setState(() {
-                        _isLoading = false;
-                      });
-                    }
-                  },
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: _messages.length + (_isLoading ? 1 : 0),
-                    itemBuilder: (context, index) {
-                      if (_isLoading && index == _messages.length) {
-                        return const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                            child: Row(
-                              children: [
-                                SpinKitWave(
-                                  color: Colors.greenAccent,
-                                  size: 20.0,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Assistant is typing...",
-                                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16),
+            IconButton(
+              icon: const Icon(Icons.logout, color: Colors.black),
+              onPressed: _handleLogout,
+            ),
+          ],
+        ),
+        body: Stack(
+          children: [
+            Opacity(
+              opacity: 0.3,
+              child: Image.asset(
+                'assets/logo1.jpg',
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
+            Column(
+              children: [
+                Expanded(
+                  child: BlocListener<ChatBloc, ChatState>(
+                    listener: (context, state) {
+                      if (state is ChatLoadedState) {
+                        setState(() {
+                          _messages.add(Message(text: state.chatData.message, isUser: false));
+                          _isLoading = false;
+                        });
+                        _scrollToBottom();
+                      } else if (state is ChatErrorState) {
+                        showMessage(context, const Icon(Icons.error, color: Colors.red), state.errorMessage);
+                        setState(() {
+                          _isLoading = false;
+                        });
+                      }
+                    },
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      itemCount: _messages.length + (_isLoading ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (_isLoading && index == _messages.length) {
+                          return const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SpinKitWave(
+                                    color: Colors.greenAccent,
+                                    size: 20.0,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    "Assistant is typing...",
+                                    style: TextStyle(color: Colors.black, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+
+                        final message = _messages[index];
+                        bool isUserMessage = message.isUser;
+
+                        return Align(
+                          alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                            padding: const EdgeInsets.all(12.0),
+                            decoration: BoxDecoration(
+                              color: isUserMessage
+                                  ? Colors.blueAccent.withOpacity(0.9)
+                                  : Colors.greenAccent.withOpacity(0.9),
+                              borderRadius: BorderRadius.only(
+                                topLeft: const Radius.circular(20),
+                                topRight: const Radius.circular(20),
+                                bottomLeft: isUserMessage ? const Radius.circular(20) : const Radius.circular(0),
+                                bottomRight: isUserMessage ? const Radius.circular(0) : const Radius.circular(20),
+                              ),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 4,
+                                  offset: Offset(2, 2),
                                 ),
                               ],
                             ),
-                          ),
-                        );
-                      }
-
-                      final message = _messages[index];
-                      bool isUserMessage = message.isUser;
-
-                      return Align(
-                        alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            color: isUserMessage
-                                ? Colors.blueAccent.withOpacity(0.8)
-                                : Colors.greenAccent.withOpacity(0.8),
-                            borderRadius: BorderRadius.only(
-                              topLeft: const Radius.circular(20),
-                              topRight: const Radius.circular(20),
-                              bottomLeft: isUserMessage ? const Radius.circular(20) : const Radius.circular(0),
-                              bottomRight: isUserMessage ? const Radius.circular(0) : const Radius.circular(20),
+                            child: Text(
+                              message.text,
+                              style: TextStyle(
+                                color:  isUserMessage
+                                  ? const Color.fromARGB(255, 255, 255, 255).withOpacity(0.9)
+                                  : const Color.fromARGB(255, 0, 0, 0).withOpacity(0.9),
+                                fontSize: 16,
+                              ),
                             ),
                           ),
-                          child: Text(
-                            message.text,
-                            style: const TextStyle(color: Color.fromARGB(255, 25, 25, 25), fontSize: 16),
-                          ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30.0, left: 8.0, right: 8.0, top: 10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _messageController,
-                        decoration: InputDecoration(
-                          hintText: "Type a message",
-                          hintStyle: const TextStyle(color: Colors.grey), 
-                          filled: true,
-                          fillColor: Colors.white, 
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide.none, 
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0), // Padding inside the TextField
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.5), width: 1.0), // Light border
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: const BorderSide(color: Colors.blueAccent, width: 2.0), // Highlighted border when focused
-                          ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _messageController,
+                          decoration: createMessageInputDecoration(),
+                          onSubmitted: (_) => _sendMessage(), // Send on enter
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.send, color: Colors.blueAccent),
-                      onPressed: _sendMessage,
-                    ),
-                  ],
+                      IconButton(
+                        icon: const Icon(Icons.send, color: Colors.blueAccent),
+                        onPressed: _sendMessage,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+
 
   @override
   void dispose() {
