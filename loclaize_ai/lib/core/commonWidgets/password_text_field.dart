@@ -13,7 +13,7 @@ InputDecoration passwordInputDecoration({
         isPasswordVisible ? Icons.visibility : Icons.visibility_off,
         color: Colors.blueAccent,
       ),
-      onPressed: togglePasswordVisibility, // Toggling function passed here
+      onPressed: togglePasswordVisibility, 
     ),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10.0),

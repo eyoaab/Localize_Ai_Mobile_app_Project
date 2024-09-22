@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loclaize_ai/core/commonFunctions/commonFunction.dart';
 import 'package:loclaize_ai/core/commonWidgets/password_text_field.dart';
 import 'package:loclaize_ai/core/commonWidgets/store.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
@@ -11,7 +12,7 @@ import 'package:loclaize_ai/feutures/authetication/presentation/bloc/user_state.
 import 'package:loclaize_ai/feutures/authetication/presentation/pages/signup_page.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/pages/chat_page.dart';
 
- 
+  
 
 class SignInPage extends StatefulWidget {
   @override
@@ -21,7 +22,10 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-    bool _isPasswordVisible = false;
+  bool _isPasswordVisible = false;
+
+  String? _emailError;
+  Color _borderColor = Colors.grey;
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -33,6 +37,7 @@ class _SignInPageState extends State<SignInPage> {
     final username = _usernameController.text;
     final password = _passwordController.text;
 
+    if(_emailError == null){return;}
     if (username.isEmpty || password.isEmpty) {
       showMessage(
         context,
@@ -86,9 +91,7 @@ class _SignInPageState extends State<SignInPage> {
                 context,
                 const Icon(Icons.error, size: 50, color: Colors.red),
                 userData.message,
-              );
-      
-      
+              );      
               }else{
               goToChatPage();  
       
@@ -128,9 +131,48 @@ class _SignInPageState extends State<SignInPage> {
                       const SizedBox(height: 30),
                        TextField(
                         controller: _usernameController,
-                        decoration: 
-                        customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Colors.blueAccent))
+                        decoration: InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: const Icon(Icons.email, color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: _borderColor),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: _borderColor), 
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                    ),
+                     keyboardType: TextInputType.emailAddress,
+                    onChanged: (value) {
+                      if (value.isEmpty) {
+                        setState(() {
+                          _emailError = 'Please enter your email';
+                          _borderColor = Colors.red; 
+                        });
+                      } else if (!isValidEmail(value)) {
+                        setState(() {
+                          _emailError = 'Please enter a valid email address';
+                          _borderColor = Colors.red; 
+                        });
+                      } else {
+                        setState(() {
+                          _emailError = null;
+                          _borderColor = Colors.green; 
+                        });
+                      }
+                    },
+                      ),
+                      const SizedBox(height: 10),
+                      if (_emailError != null)
+                        Text(
+                        _emailError!,
+                        style: const TextStyle(color: Colors.red),
+                        ),
                       const SizedBox(height: 20),
       
                       TextField(
@@ -169,7 +211,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               )
               ,
-              const SizedBox(height: 40,),
+              const SizedBox(height: 20,),
                       TextButton(
                   onPressed: goToSignUpPage,
                   child: RichText(

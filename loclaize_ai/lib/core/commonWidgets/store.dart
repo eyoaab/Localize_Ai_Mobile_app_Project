@@ -45,15 +45,40 @@ void showMessage(BuildContext context, Icon title, String message) {
   );
 }
 
+// InputDecoration customInputDecoration({
+//   required String labelText,
+//   required Icon prefixIcon,
+// }) {
+//   return InputDecoration(
+//     labelText: labelText,
+//     border: OutlineInputBorder(
+//       borderRadius: BorderRadius.circular(10.0),
+//     ),
+//     prefixIcon: prefixIcon,
+//   );
+// }
+
 InputDecoration customInputDecoration({
   required String labelText,
   required Icon prefixIcon,
+  Color enabledBorderColor = Colors.grey,
+  Color focusedBorderColor = Colors.blue,
+  Color errorBorderColor = Colors.red,
 }) {
   return InputDecoration(
     labelText: labelText,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
-    ),
     prefixIcon: prefixIcon,
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: enabledBorderColor),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: focusedBorderColor),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: errorBorderColor),
+    ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: errorBorderColor),
+    ),
   );
 }
