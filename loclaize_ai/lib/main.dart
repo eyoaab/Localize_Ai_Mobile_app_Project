@@ -7,7 +7,7 @@ import 'package:loclaize_ai/feutures/authetication/presentation/pages/signup_pag
 import 'package:loclaize_ai/feutures/authetication/presentation/pages/splash_screen.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/bloc/chat_bloc.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/pages/chat_page.dart';
-
+  
 import 'injection_container.dart';
 
 
@@ -15,12 +15,12 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await setUp(); 
 
-  // runApp(
-  //   DevicePreview(
-  //   builder: (context) => MyApp(),
-  // ),);
+  runApp(
+    DevicePreview(
+    builder: (context) => MyApp(),
+  ),);
 
-  runApp(MyApp());
+  // runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
         ),
       ],  
       child: MaterialApp(
-      // locale: DevicePreview.locale(context),
-      // builder: DevicePreview.appBuilder,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       home: SplashScreen()
        

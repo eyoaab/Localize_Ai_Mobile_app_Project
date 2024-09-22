@@ -1,3 +1,4 @@
+import 'package:loclaize_ai/feutures/authetication/data/model/model.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
 
 abstract class UserState {}
@@ -8,14 +9,14 @@ class UserLoadingState extends UserState {}
 
 
 class UserLoggedInState extends UserState {
-  final UserEntity userData;
+  final Model userData;
   UserLoggedInState({required this.userData});
 
 }
 class UserSignUpState extends UserState {
-  final bool successful;
+  final String message;
   UserSignUpState({
-    required this.successful
+    required this.message
     });
     }
 

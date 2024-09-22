@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:loclaize_ai/feutures/authetication/data/model/model.dart';
 
 import '../../../../core/error/faliure.dart';
 import '../entity/user_entity.dart';
@@ -11,7 +12,7 @@ class SigninUsecase{
     required this.userRepository
   });
 
-  Future<Either<Failure,UserEntity>> excute(UserEntity user)  async{
+  Future<Either<Failure,Model>> excute(UserEntity user)  async{
     return userRepository.signIn(user);
   }
 }

@@ -13,7 +13,7 @@ class SignupUsecase{
     }
   );
 
-  Future<Either<Failure,bool>> excute(UserEntity user)async{
+  Future<Either<Failure,String>> excute(UserEntity user)async{
     return userRepository.signUp(user);
   }
 }

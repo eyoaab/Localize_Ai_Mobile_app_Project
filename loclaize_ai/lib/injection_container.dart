@@ -13,10 +13,17 @@ import 'package:loclaize_ai/feutures/chat/data/repository/chat_repository_impl.d
 import 'package:loclaize_ai/feutures/chat/domain/repository/chat_repository.dart';
 import 'package:loclaize_ai/feutures/chat/domain/usecase/get_chat_usecase.dart';
 import 'package:loclaize_ai/feutures/chat/presentation/bloc/chat_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final locator = GetIt.instance;
 
 Future<void> setUp() async {
+  final prefs = await SharedPreferences.getInstance();
+  locator.registerSingleton<SharedPreferences>(prefs);
+  
+  // Register the Shar
+
+  /****** */
   locator.registerLazySingleton(() => http.Client());
 locator.registerLazySingleton(() => Connectivity());
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
@@ -35,12 +42,14 @@ locator.registerLazySingleton(() => Connectivity());
       () => ChatRepositoryImpl(
             chatRemoteDatasource: locator(),
             networkInfo: locator(),
+            store: locator()
           ));
 
   locator.registerLazySingleton<UserRepository>(
       () => UserRepositoryImpl(
             remoteDatasource: locator(),
             networkInfo: locator(),
+            store: locator()
           ));
 
 

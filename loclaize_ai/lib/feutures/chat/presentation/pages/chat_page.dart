@@ -75,6 +75,8 @@ class _ChatPageState extends State<ChatPage> {
             opacity: 0.3,
             child: Image.asset(
               'assets/logo.png',
+              // 'logo.png',
+
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,

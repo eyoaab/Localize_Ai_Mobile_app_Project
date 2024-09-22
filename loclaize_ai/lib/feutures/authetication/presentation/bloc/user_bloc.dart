@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loclaize_ai/core/error/faliure.dart';
+import 'package:loclaize_ai/feutures/authetication/data/model/model.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/entity/user_entity.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/usecase/signin_usecase.dart';
 import 'package:loclaize_ai/feutures/authetication/domain/usecase/signup_usecase.dart';
@@ -32,22 +33,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     
     on<SignUpEvent> ((event,emit)async{
       emit(UserLoadingState());
-      final Either<Failure, bool> result = await signUpUsecase.excute(event.user);
+      final Either<Failure, String> result = await signUpUsecase.excute(event.user);
       result.fold(
         (failure) => emit(UserErrorState(errorMessage: failure.message)),
-        (check) => emit(UserSignUpState(successful: check)),
+        (respomse) => emit(UserSignUpState(message: respomse)),
       );
       });
 
     on<SignInEvent> ((event,emit)async{
       emit(UserLoadingState());
-      final Either<Failure, UserEntity> result = await signInUsecase.excute(event.user);
+      final Either<Failure, Model> result = await signInUsecase.excute(event.user);
       result.fold(
         (failure) => emit(UserErrorState(errorMessage: failure.message)),
         (check) { 
-          log(check.name);
-          log(check.username);
-          log(check.password);
+          // log(check.name);
+          // log(check.username);
+          // log(check.password);
 
           emit(UserLoggedInState(userData: check));},
 

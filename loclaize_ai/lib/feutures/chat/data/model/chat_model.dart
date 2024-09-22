@@ -9,13 +9,13 @@ class ChatModel extends ChatEntity {
 
   factory ChatModel.fromJson(Map<String, dynamic> json) {
     return ChatModel(
-      message: json['message'],
+      message: json['response'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'message': message, 
+      'translated': message, 
     };
   }
 

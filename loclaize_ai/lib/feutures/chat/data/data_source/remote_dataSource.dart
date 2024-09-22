@@ -4,48 +4,41 @@ import 'package:http/http.dart' as http;
 import 'package:loclaize_ai/core/error/exception.dart';
 import 'package:loclaize_ai/feutures/chat/data/model/chat_model.dart';
 
-
 abstract class ChatRemoteDatasource {
-  Future<ChatModel> getMessage(String message);
-
+  Future<ChatModel> getMessage(String message, String token);
 }
 
 class ChatRemoteDatasourceImpl extends ChatRemoteDatasource {
   final http.Client client;
   ChatRemoteDatasourceImpl({required this.client});
 
-  
   @override
-  Future<ChatModel> getMessage(String message) async {
+  Future<ChatModel> getMessage(String message,String token) async {
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      
+      final response = await client.post(
+        Uri.parse('https://backend-iftf.onrender.com/gpt'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${token}',
+        },
+        body: json.encode({
+          'prompt': message,
+        }),
+      );
 
-      // final response = await client.post(
-      //   Uri.parse('api end point'),
-      //   body: json.encode({
-      //     'text': message,
-      //   }),
-      // );
-      // if (response.statusCode == 200) {
-      if (200 == 200) {
-        log('this from the remote data source');
-        log(message);
+      log("Response status: ${response.statusCode}");
+      log("Response body: ${response.body}");
 
-        // final responseBody = response.body;
-         String jsonString = '''
-              {
-                "message": "Hello Eyob the one and the only, how can I assist you today?"
-              }
-              ''';
-        // return ChatModel.fromJson(json.decode(responseBody));
-        return ChatModel.fromJson(json.decode(jsonString));
-
+      if (response.statusCode == 200) {
+        return ChatModel.fromJson(json.decode(response.body));
       } else {
+        log('Server responded with status: ${response.statusCode}');
         throw ServerException();
       }
     } on Exception catch (e) {
+      log(e.toString());
       throw ServerException();
     }
-    
   }
 }

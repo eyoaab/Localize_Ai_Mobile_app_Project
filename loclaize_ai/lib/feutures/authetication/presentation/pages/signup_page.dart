@@ -79,6 +79,7 @@ class _SignupPageState extends State<SignupPage> {
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state is UserErrorState) {
+            log('error in eroor state');
             showMessage(
               context,
               const Icon(Icons.error, size: 50, color: Colors.red),
@@ -86,21 +87,23 @@ class _SignupPageState extends State<SignupPage> {
             );
             clearFields();
           } else if (state is UserSignUpState) {
-            final bool isSuccess = state.successful;
+            String message = state.message;
+            final bool isSuccess = message == "User registered successfully" ;
             if (isSuccess) {
-              showMessage(
-                context,
-                const Icon(Icons.check, size: 50, color: Colors.green),
-                'User signed up successfully',
-              );
+           
               clearFields();
               goToSignInPage();
+                 showMessage(
+                context,
+                const Icon(Icons.check, size: 50, color: Colors.green),
+                message,
+              );
             }
             else{
               showMessage(
                 context,
                 const Icon(Icons.error, size: 50, color: Colors.red),
-                'Failed to sign up please try again',
+                message,
               );
             }      
           }
@@ -115,6 +118,8 @@ class _SignupPageState extends State<SignupPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset('assets/logo.png'),
+                    // Image.asset('logo.png'),
+
                      Center(
                       child: Text(
                         'Sign up',
@@ -127,13 +132,13 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 10),
                      TextField(
-                      controller: _usernameController,
+                      controller: _nameController,
                       decoration: 
                       customInputDecoration(labelText: 'Name',prefixIcon:  const Icon(Icons.person,color:Colors.blueAccent))
                     ),
                     const SizedBox(height: 20),
                      TextField(
-                      controller: _nameController,
+                      controller: _usernameController,
                       decoration: 
                       customInputDecoration(labelText: 'Username',prefixIcon:  const Icon(Icons.email,color:Colors.blueAccent))
                     ),

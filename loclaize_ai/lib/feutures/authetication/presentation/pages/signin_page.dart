@@ -46,15 +46,15 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void goToSignUpPage() {
-       Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(builder: (context) => SignupPage()),
-);
+      Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignupPage()),
+      );
   }
-   void goToChatPage() {
-     Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(builder: (context) => ChatPage()),
+  void goToChatPage() {
+      Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => ChatPage()),
 );
   }
 
@@ -72,8 +72,20 @@ class _SignInPageState extends State<SignInPage> {
             _usernameController.clear();
             _passwordController.clear();
           } else if (state is UserLoggedInState) {
-            // final UserEntity userEntity = state.userData;  
+            final userData = state.userData;
+            if (userData.isError){
+              showMessage(
+              context,
+              const Icon(Icons.error, size: 50, color: Colors.red),
+              userData.message,
+            );
+
+
+            }else{
             goToChatPage();  
+
+            }
+            // final UserEntity userEntity = state.userData;  
           }
           
         },
@@ -86,6 +98,8 @@ class _SignInPageState extends State<SignInPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset('assets/logo.png'),
+                    // Image.asset('logo.png'),
+
                      Center(
                       child: Text(
                         'Sign in to your account',
