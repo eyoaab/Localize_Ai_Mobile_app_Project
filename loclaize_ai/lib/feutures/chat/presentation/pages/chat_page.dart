@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,11 +22,12 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final List<Message> _messages = [
-    Message(text: 'Ask anything you want, I am here to help you', isUser: false),
+    Message(text: 'የሚፈልጉትን ማንኛውንም ነገር ይጠይቁ, እርስዎን ለመርዳት ዝግጁ ነኝ', isUser: false),
   ];
 
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
+  String? _errorMessage;
 
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
@@ -46,6 +48,7 @@ class _ChatPageState extends State<ChatPage> {
         _messages.add(Message(text: userMessage, isUser: true));
         _isLoading = true;
         _messageController.clear();
+        _errorMessage = null;
       });
       _scrollToBottom();
 
@@ -56,7 +59,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _handleLogout() {
-        messageForLogOut(context, const Icon(Icons.question_mark_outlined, color: Colors.red,size:40), widget.name);
+    messageForLogOut(context, const Icon(Icons.question_mark_outlined, color: Colors.red, size: 40), widget.name);
   }
 
   @override
@@ -64,8 +67,8 @@ class _ChatPageState extends State<ChatPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Text("Chat Page", style: TextStyle(color: Colors.black)),
+          backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+          title: const Text("Localize-Ai", style: TextStyle(color: Colors.black)),
           actions: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,15 +84,12 @@ class _ChatPageState extends State<ChatPage> {
                 const SizedBox(height: 2),
                 Text(
                   widget.email,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                  ),
+                  style: const TextStyle(fontSize: 16, color: Colors.blueAccent),
                 ),
               ],
             ),
             IconButton(
-              icon: const Icon(Icons.logout, color: Colors.black),
+              icon: const Icon(Icons.logout, color: Color.fromARGB(255, 155, 2, 2)),
               onPressed: _handleLogout,
             ),
           ],
@@ -114,13 +114,15 @@ class _ChatPageState extends State<ChatPage> {
                         setState(() {
                           _messages.add(Message(text: state.chatData.message, isUser: false));
                           _isLoading = false;
+                          _errorMessage = null; 
                         });
                         _scrollToBottom();
                       } else if (state is ChatErrorState) {
-                        showMessage(context, const Icon(Icons.error, color: Colors.red), state.errorMessage);
                         setState(() {
+                          _errorMessage = state.errorMessage; 
                           _isLoading = false;
                         });
+                        _scrollToBottom();
                       }
                     },
                     child: ListView.builder(
@@ -128,24 +130,30 @@ class _ChatPageState extends State<ChatPage> {
                       itemCount: _messages.length + (_isLoading ? 1 : 0),
                       itemBuilder: (context, index) {
                         if (_isLoading && index == _messages.length) {
-                          return const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SpinKitWave(
-                                    color: Colors.greenAccent,
-                                    size: 20.0,
-                                  ),
-                                  SizedBox(width: 10),
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const SpinKitWave(
+                                  color: Colors.greenAccent,
+                                  size: 20.0,
+                                ),
+                                const SizedBox(width: 10),
+                                const Text(
+                                  "ረዳትዎ  እየጻፈ ነው....",
+                                  style: TextStyle(color: Colors.black, fontSize: 16),
+                                ),
+                                if (_errorMessage != null) ...[
+                                  const SizedBox(width: 10),
+                                  Icon(Icons.error, color: Colors.red), // Show error icon
+                                  const SizedBox(width: 5),
                                   Text(
-                                    "Assistant is typing...",
-                                    style: TextStyle(color: Colors.black, fontSize: 16),
+                                    _errorMessage!,
+                                    style: const TextStyle(color: Colors.red, fontSize: 16),
                                   ),
                                 ],
-                              ),
+                              ],
                             ),
                           );
                         }
@@ -179,9 +187,9 @@ class _ChatPageState extends State<ChatPage> {
                             child: Text(
                               message.text,
                               style: TextStyle(
-                                color:  isUserMessage
-                                  ? const Color.fromARGB(255, 255, 255, 255).withOpacity(0.9)
-                                  : const Color.fromARGB(255, 0, 0, 0).withOpacity(0.9),
+                                color: isUserMessage
+                                    ? const Color.fromARGB(255, 255, 255, 255).withOpacity(0.9)
+                                    : const Color.fromARGB(255, 0, 0, 0).withOpacity(0.9),
                                 fontSize: 16,
                               ),
                             ),
@@ -216,7 +224,6 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
-
 
   @override
   void dispose() {

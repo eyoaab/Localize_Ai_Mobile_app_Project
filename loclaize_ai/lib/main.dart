@@ -34,6 +34,14 @@ class MyApp extends StatelessWidget {
         ),
       ],  
       child: MaterialApp(
+        theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.blue, 
+        scaffoldBackgroundColor: Colors.white, 
+        appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white, 
+        ),),
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,

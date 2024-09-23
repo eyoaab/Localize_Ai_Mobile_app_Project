@@ -39,13 +39,13 @@ class UserRepositoryImpl implements UserRepository {
         saveToken(result.token);
         return Right(result); 
       } on ServerException {
-        return const Left(ServerFailure('Failed to sign in please try again'));
+        return const Left(ServerFailure('በመለያ መግባት አልተሳካም እባክዎ እንደገና ይሞክሩ'));
       } catch (e) {
         return Left(UnknownFailure(e.toString())); 
       }
     } else {
 
-    return const Left(ConnectionFailure('Please check your internet connection and try again')); 
+    return const Left(ConnectionFailure('እባክዎ የበይነመረብ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ')); 
 
     }
   }
@@ -57,12 +57,12 @@ class UserRepositoryImpl implements UserRepository {
         final result = await remoteDatasource.signUpUser(user);
         return Right(result); 
       } on ServerException {
-        return const Left(ServerFailure('Failed to sign up. Please try again')); 
+        return const Left(ServerFailure('መመዝገብ አልተሳካም። እባክህ እንደገና ሞክር')); 
       } catch (e) {
         return Left(UnknownFailure(e.toString())); 
       }
     } else {
-      return const Left(ConnectionFailure('Please check your internet connection and try again')); 
+      return const Left(ConnectionFailure('እባክዎ የበይነመረብ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ')); 
 
     }
   }

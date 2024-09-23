@@ -41,7 +41,7 @@ class _SignInPageState extends State<SignInPage> {
       showMessage(
         context,
         const Icon(Icons.info, size: 50, color: Colors.red),
-        'Please enter all fields',
+        'እባክዎ ሁሉንም መስኮች ያስገቡ',
       );
       return;
     } else {
@@ -117,7 +117,7 @@ class _SignInPageState extends State<SignInPage> {
       
                        Center(
                         child: Text(
-                          'Sign in to your account',
+                          'ወደ መለያዎ ይግቡ',
                           style: GoogleFonts.balthazar(
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
@@ -129,7 +129,7 @@ class _SignInPageState extends State<SignInPage> {
                        TextField(
                         controller: _usernameController,
                         decoration: InputDecoration(
-                      labelText: 'Email',
+                      labelText: 'ኢሜይል',
                       prefixIcon: const Icon(Icons.email, color: Colors.blueAccent),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: _borderColor),
@@ -148,12 +148,12 @@ class _SignInPageState extends State<SignInPage> {
                     onChanged: (value) {
                       if (value.isEmpty) {
                         setState(() {
-                          _emailError = 'Please enter your email';
+                          _emailError = 'እባክህ ኢሜል አስገባ';
                           _borderColor = Colors.red; 
                         });
                       } else if (!isValidEmail(value)) {
                         setState(() {
-                          _emailError = 'Please enter a valid email address';
+                          _emailError = 'እባክህን ትክክለኛ ኢሜል አስገባ';
                           _borderColor = Colors.red; 
                         });
                       } else {
@@ -176,7 +176,7 @@ class _SignInPageState extends State<SignInPage> {
                         controller: _passwordController,
                         obscureText: !_isPasswordVisible, 
                         decoration: passwordInputDecoration(
-                        labelText: 'Password',
+                        labelText: 'የይለፍ ቃል',
                         isPasswordVisible: _isPasswordVisible,
                         togglePasswordVisibility: _togglePasswordVisibility,),
                       ),
@@ -199,7 +199,7 @@ class _SignInPageState extends State<SignInPage> {
             )
           :
                    const Text(
-                    'Sign In',
+                    'ይግቡ',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 21,
@@ -213,14 +213,14 @@ class _SignInPageState extends State<SignInPage> {
                   onPressed: goToSignUpPage,
                   child: RichText(
                     text:const  TextSpan(
-                      text: "Don't have an account? ",
+                      text: "መለያ የለህም? ",
                       style:  TextStyle(
                         color: Colors.black, 
                         fontSize: 16,
                       ),
                       children: [
                         TextSpan(
-                          text: 'Sign up',
+                          text: 'ይመዝገቡ',
                           style:  TextStyle(
                             color: Colors.blueAccent, 
                             fontWeight: FontWeight.bold,

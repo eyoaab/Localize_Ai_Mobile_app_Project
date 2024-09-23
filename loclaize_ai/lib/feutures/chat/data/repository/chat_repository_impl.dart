@@ -37,12 +37,12 @@ Future<String?> gettoken(String key) async {
         final result = await chatRemoteDatasource.getMessage(message, token);
         return Right(result.toEntity()); 
       } on ServerException {
-        return const Left(ServerFailure('failed to get the response p;ease try again'));
+        return const Left(ServerFailure('መልሱን ማግኘት አልተሳካም እባክዎ እንደገና ይሞክሩ'));
       } catch (e) {
         return Left(UnknownFailure(e.toString())); 
       }
     } else {
-      return const Left(ConnectionFailure('Please check your internet connection and try again')); 
+      return const Left(ConnectionFailure('እባክዎ የበይነመረብ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ')); 
     }
 
   }

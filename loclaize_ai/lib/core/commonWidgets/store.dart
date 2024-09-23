@@ -35,7 +35,7 @@ void showMessage(BuildContext context, Icon title, String message) {
                 ),
               ),
               child: const Text(
-                'OK',
+                'እሺ',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
@@ -72,7 +72,7 @@ InputDecoration customInputDecoration({
   );
 }
 
-InputDecoration createMessageInputDecoration({String hintText = "Type a message"}) {
+InputDecoration createMessageInputDecoration({String hintText = "ስለ ምን ማወቅ ይፈልጋሉ.."}) {
   return InputDecoration(
     hintText: hintText,
     hintStyle: const TextStyle(color: Colors.grey),
@@ -107,7 +107,7 @@ void messageForLogOut(BuildContext context, Icon title, String message) {
         content: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            '$message are you sure',
+            '$message እርግጠኛ ነህ ?',
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 18,
@@ -138,7 +138,7 @@ void messageForLogOut(BuildContext context, Icon title, String message) {
                   ),
                 ),
                 child: const Text(
-                  'Yes',
+                  'አዎ',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -155,7 +155,7 @@ void messageForLogOut(BuildContext context, Icon title, String message) {
                   ),
                 ),
                 child: const Text(
-                  'Cancel',
+                  'አይ',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),

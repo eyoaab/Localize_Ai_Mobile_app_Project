@@ -50,7 +50,7 @@ class _SignupPageState extends State<SignupPage> {
       showMessage(
         context,
         const Icon(Icons.info, size: 50, color: Colors.red),
-        'Please enter all fields',
+        'እባክዎ ሁሉንም መስኮች ያስገቡ',
       );
       return;
     } else if (password != confirmPassword) {
@@ -162,7 +162,7 @@ class _SignupPageState extends State<SignupPage> {
                     TextField(
                       controller: _usernameController,
                       decoration: InputDecoration(
-                      labelText: 'Email',
+                      labelText: 'ኢሜይል',
                       prefixIcon: const Icon(Icons.email, color: Colors.blueAccent),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: _borderColorForEmail),
@@ -182,12 +182,12 @@ class _SignupPageState extends State<SignupPage> {
                       onChanged: (value) {
                       if (value.isEmpty) {
                         setState(() {
-                          _emailError = 'Please enter your email';
+                          _emailError = 'እባክህ ኢሜል አስገባ';
                           _borderColorForEmail  = Colors.red; 
                         });
                       } else if (!isValidEmail(value)) {
                         setState(() {
-                          _emailError = 'Please enter a valid email address';
+                          _emailError = 'እባክህን ትክክለኛ ኢሜል አስገባ';
                          _borderColorForEmail  = Colors.red; 
                         });
                       } else {
@@ -211,7 +211,7 @@ class _SignupPageState extends State<SignupPage> {
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible, 
                     decoration: passwordInputDecoration(
-                      labelText: 'Password',
+                      labelText: 'የይለፍ ቃል',
                       isPasswordVisible: _isPasswordVisible,
                       togglePasswordVisibility: _togglePasswordVisibility,
                     ),
@@ -222,7 +222,7 @@ class _SignupPageState extends State<SignupPage> {
                     controller: _confirmPasswordController,
                     obscureText: !_isConfirmPasswordVisible, 
                     decoration: passwordInputDecoration(
-                      labelText: 'Confirm Password',
+                      labelText: 'የይለፍ ቃል ያረጋግጡ',
                       isPasswordVisible: _isConfirmPasswordVisible,
                       togglePasswordVisibility: _toggleConfirmPasswordVisibility,
                     ),
@@ -246,7 +246,7 @@ class _SignupPageState extends State<SignupPage> {
                                     AlwaysStoppedAnimation<Color>(Colors.white),
                               )
                             : const Text(
-                                'Sign Up',
+                                'ይመዝገቡ',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 21,
@@ -260,14 +260,14 @@ class _SignupPageState extends State<SignupPage> {
                       onPressed: goToSignInPage,
                       child: RichText(
                         text: const TextSpan(
-                          text: "Already have an account? ",
+                          text: "መለያ አለህ? ",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                           ),
                           children: [
                             TextSpan(
-                              text: 'Sign in',
+                              text: 'ይግቡ',
                               style: TextStyle(
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.bold,

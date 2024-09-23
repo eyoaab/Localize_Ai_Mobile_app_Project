@@ -44,7 +44,7 @@ class RemoteDatasourceImpl extends RemoteDatasource {
 
         return message;
       }else{
-        return "Registration failed";
+        return "ምዝገባው አልተሳካም";
       }
      
     } catch (e) {
